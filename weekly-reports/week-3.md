@@ -1,4 +1,4 @@
-week-2
+Week-3 Report
   1. Project Overview
   VYUHA is an AI-powered, multi-tenant academic management system designed to automate timetable generation and faculty substitution. It features a modern, high-performance
   architecture with a focus on visual aesthetics (3D Glassmorphism) and robust backend logic.
