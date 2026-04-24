@@ -18,7 +18,10 @@ const NotificationDropdown = () => {
   };
 
   useEffect(() => {
-    fetchNotifications();
+    const init = async () => {
+      await fetchNotifications();
+    };
+    init();
     const interval = setInterval(fetchNotifications, 30000);
     return () => clearInterval(interval);
   }, []);
