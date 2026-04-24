@@ -35,7 +35,8 @@ const FacultyDashboard = () => {
         
         let me = null;
         if (Array.isArray(allFaculty)) {
-           me = allFaculty.find(f => f.email === user?.email);
+           // Case-insensitive email comparison to avoid mapping bugs
+           me = allFaculty.find(f => f.email?.toLowerCase() === user?.email?.toLowerCase());
         }
         
         if (me) {
@@ -142,7 +143,7 @@ const FacultyDashboard = () => {
         <motion.div className="bg-orb orb-1" animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 20, repeat: Infinity }} />
       </div>
 
-      <nav className="dashboard-header-3d" style={{ position: 'relative', zIndex: 10, padding: '1.5rem 3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <nav className="dashboard-header-3d" style={{ position: 'relative', zIndex: 500, padding: '1.5rem 3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <Sparkles style={{color: '#a78bfa'}} size={28} />
           <h2 style={{ margin: 0, fontWeight: 'bold', color: 'white' }}>Teacher Portal</h2>

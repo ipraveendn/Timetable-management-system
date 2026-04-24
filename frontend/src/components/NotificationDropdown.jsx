@@ -95,7 +95,7 @@ const NotificationDropdown = () => {
               position: 'absolute', top: '50px', right: 0, width: '320px',
               background: 'rgba(15, 20, 30, 0.95)', backdropFilter: 'blur(16px)',
               border: '1px solid rgba(124,58,237,0.3)', borderRadius: '12px',
-              boxShadow: '0 10px 40px rgba(0,0,0,0.5)', zIndex: 100, overflow: 'hidden'
+              boxShadow: '0 10px 40px rgba(0,0,0,0.5)', zIndex: 1000, overflow: 'hidden'
             }}
           >
             <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
