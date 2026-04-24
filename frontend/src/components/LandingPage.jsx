@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, Calendar, Users, Zap, CheckCircle2, Building2, Send } from 'lucide-react';
-import { toast } from 'react-toastify';
+import { Sparkles, Calendar, Users, Zap, CheckCircle2 } from 'lucide-react';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -13,12 +12,6 @@ const LandingPage = () => {
   const yHero = useTransform(scrollYProgress, [0, 1], [0, 800]);
   const opacityHero = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scaleHero = useTransform(scrollYProgress, [0, 0.2], [1, 0.8]);
-
-  const handleContactSubmit = (e) => {
-    e.preventDefault();
-    toast.success("Thank you for your interest! Our team will contact your college shortly.");
-    e.target.reset();
-  };
 
   return (
     <div className="landing-container">
@@ -33,7 +26,7 @@ const LandingPage = () => {
           VYUHA
         </div>
         <button className="landing-login-btn" onClick={() => navigate('/login')}>
-          Platform Login
+          Login / Request College
         </button>
       </nav>
 
@@ -47,18 +40,15 @@ const LandingPage = () => {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <h1 className="hero-title">
-            The Future of <br/>
-            <span>Intelligent Timetables</span>
+            The Future of <span>Intelligent Timetables</span>
           </h1>
           <p className="hero-subtitle">
-            VYUHA is a state-of-the-art AI substitution and scheduling engine designed for modern colleges. 
-            Automate load balancing, manage leaves, and eliminate conflicts instantly.
+            VYUHA is a state-of-the-art scheduling and substitution engine designed for modern colleges. 
+            Automate timetable generation, manage faculty leaves, and eliminate conflicts instantly.
           </p>
           <div className="hero-cta-container" style={{ justifyContent: 'center' }}>
-            <button className="hero-cta-primary" onClick={() => {
-              document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-            }}>
-              Register Your College
+            <button className="hero-cta-primary" onClick={() => navigate('/login')}>
+              Get Started
             </button>
             <button className="hero-cta-secondary" onClick={() => {
               document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
@@ -89,7 +79,7 @@ const LandingPage = () => {
             },
             {
               icon: <Zap size={30} />,
-              title: "AI Substitution",
+              title: "Effortless Substitution",
               desc: "Instantly finds the best available substitute based on department, workload, and subject expertise."
             },
             {
@@ -146,50 +136,16 @@ const LandingPage = () => {
               <li style={{ color: 'white' }}><CheckCircle2 size={18} /> Effortless Faculty Substitution</li>
               <li style={{ color: 'white' }}><CheckCircle2 size={18} /> Custom Onboarding & Support</li>
             </ul>
-            <button className="pricing-btn primary" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
+            <button className="pricing-btn primary" onClick={() => navigate('/login')}>
               Get Started
             </button>
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="landing-section" id="contact">
-        <motion.div 
-          className="contact-container"
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="section-heading" style={{ marginBottom: '1rem', textAlign: 'left' }}>
-            Transform Your College
-          </h2>
-          <p style={{ color: '#9ca3af', marginBottom: '2rem' }}>
-            Ready to completely automate your timetable and substitution workflows? 
-            Fill out the form below and our implementation team will set up your tenant.
-          </p>
-
-          <form className="contact-form" onSubmit={handleContactSubmit}>
-            <div className="contact-input-group">
-              <input type="text" className="contact-input" placeholder="Your Name" required />
-              <input type="email" className="contact-input" placeholder="Work Email" required />
-            </div>
-            <div className="contact-input-group">
-              <input type="text" className="contact-input" placeholder="College / Institution Name" required />
-              <input type="tel" className="contact-input" placeholder="Phone Number" />
-            </div>
-            <textarea className="contact-input" placeholder="Tell us about your current scheduling challenges..." required></textarea>
-            
-            <button type="submit" className="hero-cta-primary" style={{ alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Send size={18} /> Send Inquiry
-            </button>
-          </form>
-        </motion.div>
-      </section>
-      
       {/* Footer */}
       <footer style={{ padding: '2rem', textAlign: 'center', color: '#6b7280', borderTop: '1px solid rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)' }}>
-        <p>© 2026 VYUHA AI Systems. All rights reserved.</p>
+        <p>© 2026 VYUHA. All rights reserved.</p>
       </footer>
     </div>
   );
