@@ -559,12 +559,22 @@ async def forgot_password(request: ForgotPasswordRequest):
     )
 
     email_sent = send_email(email_normalized, subject, message)
-    response = {"message": "If the email exists, a reset link will be sent."}
+    
+    if not email_sent:
+        logger.error(f"Failed to send password reset email to {email_normalized}")
+        # If in production, we should tell the user there was a delivery issue
+        if os.getenv("ENVIRONMENT", "development").lower() == "production":
+             raise HTTPException(
+                status_code=500, 
+                detail="Email delivery failed. Please check your SMTP settings or contact support."
+            )
+        else:
+            return {
+                "message": "Email delivery failed (Development Mode). Here is your link:",
+                "reset_link": reset_link
+            }
 
-    if not email_sent and os.getenv("ENVIRONMENT", "development").lower() != "production":
-        response["reset_link"] = reset_link
-
-    return response
+    return {"message": "A reset link has been sent to your email address."}
 
 
 @router.post("/reset-password")
