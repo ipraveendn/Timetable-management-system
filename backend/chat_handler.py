@@ -486,7 +486,8 @@ async def execute_substitution_for_date(college_id: str, date_str: str):
         leaves = leave_res.data or []
 
         if not leaves:
-            return f"No leave requests found for {date_str}."
+            # IMPROVEMENT: If no leaves found, don't just stop. Check for faculty in context.
+            return f"I didn't find any formal leave requests for {date_str}. However, you can ask for a specific teacher like 'Find substitute for Dr. Smith {date_str}' and I will find replacements for their entire schedule."
 
         handler = AutoHandler(college_id)
 
@@ -1551,10 +1552,7 @@ async def chat_interaction(
             assumption_note = ""
             if params.get("inferred_faculty") and params.get("faculty_name"):
                 assumption_note = f"Assumed faculty from memory: {params['faculty_name']}.\n\n"
-            response_text = (
-                f"{assumption_note}{preview}\n\n"
-                "Proposed action prepared. Confirm to finalize this workflow step."
-            )
+            response_text = f"{assumption_note}{preview}"
             proposed_actions = [{
                 "type": "find_substitute",
                 "params": params,
@@ -1599,8 +1597,8 @@ async def chat_interaction(
                 "ai_enabled": ai_available,
                 "warning": None if ai_available else SAFE_AI_UNAVAILABLE_MESSAGE,
                 "intent": "substitution",
-                "needs_confirmation": True,
-                "proposed_actions": proposed_actions,
+                "needs_confirmation": False,
+                "proposed_actions": [],
             }
 
         # Step 2: Route by intent.

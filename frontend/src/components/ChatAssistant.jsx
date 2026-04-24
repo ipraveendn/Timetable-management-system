@@ -411,21 +411,6 @@ const ChatAssistant = () => {
         </div>
 
         {/* Input Area */}
-        {pendingAction && (
-          <div className="pending-action-card">
-            <div className="pending-action-text">
-              Proposed action: <strong>{pendingAction.type}</strong>
-            </div>
-            <div className="pending-action-buttons">
-              <button type="button" className="action-btn-confirm" onClick={handleConfirmPendingAction} disabled={isTyping}>
-                Confirm
-              </button>
-              <button type="button" className="action-btn-cancel" onClick={() => setPendingAction(null)} disabled={isTyping}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
 
         <div className="input-area">
           <form onSubmit={handleSendMessage} className="input-form">
