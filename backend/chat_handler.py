@@ -448,11 +448,19 @@ def _extract_faculty_names_from_message(message: str, college_id: str) -> List[s
         return []
 
 
-def _is_replacement_notification_request(message: str) -> bool:
+def _is_replacement_notification_request(message: str, history: Optional[List[dict]] = None, context: Optional[dict] = None) -> bool:
     lowered = (message or "").lower()
     has_action = any(token in lowered for token in ["notify", "notification", "send", "assign", "confirm", "email", "mail"])
-    has_replacement = any(token in lowered for token in ["replacement", "substitute", "substitution", "cover"])
-    return has_action and has_replacement
+    has_replacement = any(token in lowered for token in ["replacement", "replacment", "substitute", "substitution", "cover"])
+    
+    if has_action and has_replacement:
+        return True
+        
+    if has_action and _message_contains_pronoun_reference(message):
+        if _has_recent_substitution_intent(history, context):
+            return True
+            
+    return False
 
 
 def _resolve_replacement_request(
@@ -1924,7 +1932,7 @@ async def chat_interaction(
         """
 
         if intent == "substitution":
-            if _is_replacement_notification_request(request.message):
+            if _is_replacement_notification_request(request.message, merged_history, merged_context):
                 notify_params = _resolve_replacement_request(
                     request.message,
                     college_id,
